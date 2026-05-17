@@ -1,0 +1,50 @@
+#social-proof-widget {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    z-index: 9999;
+    font-family: 'Arial', sans-serif;
+    min-width: 300px;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-120%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#social-proof-widget strong {
+    color: #333;
+    display: block;
+    font-size: 14px;
+}
+
+#social-proof-widget span {
+    color: #777;
+    font-size: 12px;
+}
+
+#spw-close-notif {
+    position: absolute;
+    top: 7px;
+    right: 20px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    /* color: #ccc; */
+    color: #000;
+}
