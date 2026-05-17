@@ -1,4 +1,4 @@
-#social-proof-widget {
+/* #social-proof-widget {
     display: none; 
     position: fixed !important;
     bottom: 20px !important;
@@ -12,7 +12,7 @@
     font-family: 'Arial', sans-serif !important;
     min-width: 300px !important;
     animation: slideIn 0.5s ease-out !important;
-}
+} */
 
 @keyframes slideIn {
     from {
