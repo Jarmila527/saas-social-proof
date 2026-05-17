@@ -5,22 +5,22 @@
     const widget = document.createElement('div');
     widget.id = 'social-proof-widget';
     
-    widget.style.cssText = `
-        display: none;
-        position: fixed !important;
-        bottom: 20px !important;
-        left: 20px !important;
-        width: 360px !important;
-        max-width: 90% !important;
-        background-color: #ffffff !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-        border-radius: 8px !important;
-        border: 1px solid #eeeeee !important;
-        z-index: 999999 !important;
-        font-family: Arial, sans-serif !important;
-        padding: 12px !important;
-        box-sizing: border-box !important;
-    `;
+    // widget.style.cssText = `
+    //     display: none;
+    //     position: fixed !important;
+    //     bottom: 20px !important;
+    //     left: 20px !important;
+    //     width: 360px !important;
+    //     max-width: 90% !important;
+    //     background-color: #ffffff !important;
+    //     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    //     border-radius: 8px !important;
+    //     border: 1px solid #eeeeee !important;
+    //     z-index: 999999 !important;
+    //     font-family: Arial, sans-serif !important;
+    //     padding: 12px !important;
+    //     box-sizing: border-box !important;
+    // `;
 
     widget.innerHTML = `
         <button id="spw-close-notif">×</button>
