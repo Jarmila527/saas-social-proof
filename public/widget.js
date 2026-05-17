@@ -63,7 +63,7 @@
 
     async function updateAndShowNotification() {
         try {
-            const response = await fetch(`https://saas-social-proof.onrender.com/api/last-purchase?apiKey=${CLIENT_API_KEY}`);
+            const response = await fetch(`https://saas-social-proof.onrender.com/api/last-purchase?apiKey=${CLIENT_API_KEY}&_cb=${new Date().getTime()}`);
             const data = await response.json();
 
             if (data) {
@@ -108,4 +108,5 @@
     });
 
     updateAndShowNotification();
+    setInterval(updateAndShowNotification, 15000);
 })();
