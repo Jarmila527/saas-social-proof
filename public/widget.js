@@ -4,7 +4,24 @@
 
     const widget = document.createElement('div');
     widget.id = 'social-proof-widget';
-    widget.style.display = 'none';
+
+    widget.style.cssText = `
+        display: none;
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 20px !important;
+        min-width: 300px; !important;
+        max-width: 90% !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15) !important;
+        border-radius: 50px !important;
+        border: 1px solid #eeeeee !important;
+        z-index: 999999 !important;
+        font-family: Arial, sans-serif !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+        animation: slideIn 0.5s ease-out !important;
+    `;
 
     widget.innerHTML = `
         <button id="spw-close-notif">×</button>
