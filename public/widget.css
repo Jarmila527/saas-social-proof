@@ -14,7 +14,7 @@
     animation: slideIn 0.5s ease-out !important;
 } */
 
-@keyframes slideIn {
+/* @keyframes slideIn {
     from {
         transform: translateX(-120%);
         opacity: 0;
@@ -24,7 +24,7 @@
         transform: translateX(0);
         opacity: 1;
     }
-}
+} */
 
 #social-proof-widget strong {
     color: #333 !important;

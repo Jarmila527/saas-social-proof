@@ -21,6 +21,18 @@
         padding: 12px !important;
         box-sizing: border-box !important;
         animation: slideIn 0.5s ease-out !important;
+
+        @keyframes slideIn {
+    from {
+        transform: translateX(-120%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
     `;
 
     widget.innerHTML = `
