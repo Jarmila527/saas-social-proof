@@ -131,5 +131,5 @@
     });
 
     updateAndShowNotification();
-    setInterval(updateAndShowNotification, 15000);
+    setInterval(updateAndShowNotification, 120000);
 })();
