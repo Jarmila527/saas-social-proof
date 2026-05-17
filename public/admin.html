@@ -126,9 +126,9 @@
     <script>
         const token = sessionStorage.getItem('admin_token');
 
-        if (!token) {
-            window.location.href = '/login.html';
-        }
+        // if (!token) {
+        //     window.location.href = '/login.html';
+        // }
 
         function logout() {
             sessionStorage.removeItem('admin_token');
