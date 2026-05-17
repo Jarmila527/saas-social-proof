@@ -14,17 +14,17 @@
     animation: slideIn 0.5s ease-out !important;
 } */
 
-/* @keyframes slideIn {
+ @keyframes slideIn {
     from {
-        transform: translateX(-120%);
-        opacity: 0;
+        transform: translateX(-120%) !important;
+        opacity: 0 !important;
     }
 
     to {
-        transform: translateX(0);
-        opacity: 1;
+        transform: translateX(0) !important;
+        opacity: 1 !important;
     }
-} */
+} 
 
 #social-proof-widget strong {
     color: #333 !important;
