@@ -8,7 +8,6 @@ const notificationSchema = new mongoose.Schema({
     languageText: { type: String, required: true },
     bgColor: { type: String, default: "#ffffff" }, 
     textColor: { type: String, default: "#1a202c" },
-    timeAgo: { type: String, default: "2 minutes ago" },
     createdAt: { type: Date, default: Date.now }
 });
 

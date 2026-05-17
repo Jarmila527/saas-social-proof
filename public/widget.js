@@ -28,9 +28,41 @@
     `;
     document.body.appendChild(widget);
 
+    // Pomoćna funkcija koja računa koliko je vremena prošlo od kupovine
+    function formatTimeAgo(dateString, isSerbian) {
+        const createdDate = new Date(dateString);
+        const now = new Date();
+        const differenceInSeconds = Math.floor((now - createdDate) / 1000);
+
+        if (differenceInSeconds < 60) {
+            return isSerbian ? "Pre nekoliko trenutaka" : "A few moments ago";
+        }
+
+        const differenceInMinutes = Math.floor(differenceInSeconds / 60);
+        if (differenceInMinutes < 60) {
+            if (isSerbian) {
+                return `Pre ${differenceInMinutes} min`;
+            }
+            return `${differenceInMinutes} minutes ago`;
+        }
+
+        const differenceInHours = Math.floor(differenceInMinutes / 60);
+        if (differenceInHours < 24) {
+            if (isSerbian) {
+                return `Pre ${differenceInHours} ${differenceInHours === 1 ? 'sat' : 'sata'}`;
+            }
+            return `${differenceInHours} ${differenceInHours === 1 ? 'hour' : 'hours'} ago`;
+        }
+
+        const differenceInDays = Math.floor(differenceInHours / 24);
+        if (isSerbian) {
+            return `Pre ${differenceInDays} ${differenceInDays === 1 ? 'dan' : 'dana'}`;
+        }
+        return `${differenceInDays} ${differenceInDays === 1 ? 'day' : 'days'} ago`;
+    }
+
     async function updateAndShowNotification() {
         try {
-            // Appending the query parameter so the server knows who is asking for data
             const response = await fetch(`/api/last-purchase?apiKey=${CLIENT_API_KEY}`);
             const data = await response.json();
 
@@ -42,11 +74,11 @@
                 const action = data.languageText || "bought";
                 document.getElementById('action-text').innerText = action;
 
-                let timeText = "A few moments ago";
-                if (action.includes("kupio") || action.includes("narucio") || action.includes("naručio") || action.includes("poručio")) {
-                    timeText = "Pre nekoliko trenutaka";
-                }
-                document.getElementById('time-ago').innerText = timeText;
+                // Proveravamo da li je jezik naš (balkanski) na osnovu reči u akciji
+                const isSerbian = action.includes("kupio") || action.includes("narucio") || action.includes("naručio") || action.includes("poručio");
+
+                // DINAMIČKO RAČUNANJE: Prosleđujemo createdAt datum našoj funkciji
+                document.getElementById('time-ago').innerText = formatTimeAgo(data.createdAt, isSerbian);
 
                 const bg = data.bgColor || '#ffffff';
                 const text = data.textColor || '#1a202c';
