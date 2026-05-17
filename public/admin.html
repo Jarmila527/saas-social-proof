@@ -195,11 +195,11 @@
             const lozinka = sessionStorage.getItem('admin_token');
 
             const data = {
-                apiKey: document.getElementById('apiKey').value, // Transmitting the API Key
-                customerName: document.getElementById('name').value,
-                city: document.getElementById('city').value,
-                productName: document.getElementById('product').value,
-                languageText: document.getElementById('languageText').value,
+                apiKey: document.getElementById('apiKey').value.trim(),
+                customerName: document.getElementById('name').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                productName: document.getElementById('product').value.trim(),
+                languageText: document.getElementById('languageText').value.trim(),
                 bgColor: document.getElementById('bgColor').value,
                 textColor: document.getElementById('textColor').value
             }
