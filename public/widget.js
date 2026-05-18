@@ -2,7 +2,6 @@
     // UNIQUE CLIENT KEY - Change this for each client (e.g., "client_marko_123")
     const CLIENT_API_KEY = "client_marko_123";
 
-    // 🚀 BLINDIRANI CSS: Dodajemo stilove direktno u <head> tuđeg sajta
     const style = document.createElement('style');
     style.innerHTML = `
         @keyframes spwSlideIn {
@@ -17,7 +16,6 @@
         }
 
         #social-proof-widget {
-            /* Osnovni izgled, pozicija i blindirana širina */
             display: none;
             position: fixed !important;
             bottom: 20px !important;
@@ -36,17 +34,14 @@
             color: #1a202c !important;
             text-align: left !important;
             overflow: hidden !important;
-
-            /* 🎬 BLINDIRANA ANIMACIJA: Dodajemo je ovde */
             animation: spwSlideIn 0.5s ease-out !important;
         }
 
-        /* Popravka za dugme x koje se uokvirilo i pobeglo levo */
         #spw-close-notif {
             position: absolute !important;
             top: 7px !important;
-            right: 20px !important;
-            font-size: 16px !important;
+            right: 30px !important;
+            font-size: 20px !important;
             font-weight: bold !important;
             border: none !important;
             background: none !important;
@@ -64,7 +59,6 @@
     `;
     document.head.appendChild(style);
 
-    // ... ovde se nastavlja tvoj postojeci kod za kreiranje widget diva:
     const widget = document.createElement('div');
     widget.id = 'social-proof-widget';
     // widget.style.display = 'none';
@@ -91,7 +85,7 @@
     `;
     document.body.appendChild(widget);
 
-    // Pomoćna funkcija koja računa koliko je vremena prošlo od kupovine
+    // Function that counts how much time has passed since the purchase
     function formatTimeAgo(dateString, isSerbian) {
         const createdDate = new Date(dateString);
         const now = new Date();
@@ -142,11 +136,9 @@
 
                 const action = data.languageText || "bought";
                 document.getElementById('action-text').innerText = action;
-
-                // Proveravamo da li je jezik naš (balkanski) na osnovu reči u akciji
+ 
                 const isSerbian = action.includes("kupio") || action.includes("narucio") || action.includes("naručio") || action.includes("poručio");
 
-                // DINAMIČKO RAČUNANJE: Prosleđujemo createdAt datum našoj funkciji
                 document.getElementById('time-ago').innerText = formatTimeAgo(data.createdAt, isSerbian);
 
                 const bg = data.bgColor || '#ffffff';
