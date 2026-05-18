@@ -2,27 +2,10 @@
     // UNIQUE CLIENT KEY - Change this for each client (e.g., "client_marko_123")
     const CLIENT_API_KEY = "client_marko_123";
 
-    const widget = document.createElement('div');
-    widget.id = 'social-proof-widget';
-
-    widget.style.cssText = `
-        display: none;
-        position: fixed !important;
-        bottom: 20px !important;
-        left: 20px !important;
-        min-width: 300px; !important;
-        max-width: 90% !important;
-        background-color: #ffffff !important;
-        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15) !important;
-        border-radius: 50px !important;
-        border: 1px solid #eeeeee !important;
-        z-index: 999999 !important;
-        font-family: Arial, sans-serif !important;
-        padding: 12px !important;
-        box-sizing: border-box !important;
-        animation: slideIn 0.5s ease-out !important;
-
-        @keyframes slideIn {
+    // 🚀 BLINDIRANI CSS: Dodajemo stilove direktno u <head> tuđeg sajta
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes spwSlideIn {
             from {
                 transform: translateX(-120%);
                 opacity: 0;
@@ -33,28 +16,42 @@
             }
         }
 
-        #social-proof-widget strong {
-            color: #333 !important;
-            display: inline !important; /* Promenjeno u inline da ime i grad stoje lepo u redu */
-            font-size: 14px !important;
+        #social-proof-widget {
+            /* Osnovni izgled, pozicija i blindirana širina */
+            display: none;
+            position: fixed !important;
+            bottom: 20px !important;
+            left: 20px !important;
+            width: 360px !important;
+            max-width: 90% !important;
+            background: white !important;
+            padding: 15px !important;
+            border-radius: 50px !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+            border: 1px solid #eee !important;
+            z-index: 999999 !important;
+            font-family: 'Arial', sans-serif !important;
+            box-sizing: border-box !important;
+            min-width: 300px !important;
+            color: #1a202c !important;
+            text-align: left !important;
+            overflow: hidden !important;
+
+            /* 🎬 BLINDIRANA ANIMACIJA: Dodajemo je ovde */
+            animation: spwSlideIn 0.5s ease-out !important;
         }
 
-        #social-proof-widget span {
-            color: #777 !important;
-            font-size: 12px !important;
-            display: inline !important;
-        }
-
+        /* Popravka za dugme x koje se uokvirilo i pobeglo levo */
         #spw-close-notif {
             position: absolute !important;
-            top: 12px !important;
-            right: 22px !important;
+            top: 7px !important;
+            right: 20px !important;
             font-size: 16px !important;
             font-weight: bold !important;
             border: none !important;
             background: none !important;
             cursor: pointer !important;
-            color: #000000 !important;
+            color: #000 !important;
             padding: 0 !important;
             line-height: 1 !important;
             width: auto !important;
@@ -62,8 +59,15 @@
             min-width: 0 !important;
             min-height: 0 !important;
             z-index: 1000000 !important;
+            border-style: none !important; /* Brise okvir */
         }
     `;
+    document.head.appendChild(style);
+
+    // ... ovde se nastavlja tvoj postojeci kod za kreiranje widget diva:
+    const widget = document.createElement('div');
+    widget.id = 'social-proof-widget';
+    // widget.style.display = 'none';
 
     widget.innerHTML = `
         <button id="spw-close-notif">×</button>
@@ -148,6 +152,7 @@
                 const bg = data.bgColor || '#ffffff';
                 const text = data.textColor || '#1a202c';
 
+                widget.style.setProperty('display', 'block', 'important');
                 widget.style.setProperty('background', bg, 'important');
                 widget.style.setProperty('color', text, 'important');
 
