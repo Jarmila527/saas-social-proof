@@ -136,7 +136,7 @@
 
                 const action = data.languageText || "bought";
                 document.getElementById('action-text').innerText = action;
- 
+
                 const isSerbian = action.includes("kupio") || action.includes("narucio") || action.includes("naručio") || action.includes("poručio");
 
                 document.getElementById('time-ago').innerText = formatTimeAgo(data.createdAt, isSerbian);
@@ -153,6 +153,7 @@
                 document.getElementById('product-name').style.setProperty('color', text, 'important');
                 document.getElementById('time-ago').style.setProperty('color', text, 'important');
                 document.getElementById('time-ago').style.setProperty('opacity', '0.7', 'important');
+                document.getElementById('spw-close-notif').style.setProperty('color', text, 'important');
 
                 setTimeout(() => {
                     widget.style.display = 'block';
