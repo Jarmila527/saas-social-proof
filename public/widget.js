@@ -21,6 +21,48 @@
         padding: 12px !important;
         box-sizing: border-box !important;
         animation: slideIn 0.5s ease-out !important;
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-120%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        #social-proof-widget strong {
+            color: #333 !important;
+            display: inline !important; /* Promenjeno u inline da ime i grad stoje lepo u redu */
+            font-size: 14px !important;
+        }
+
+        #social-proof-widget span {
+            color: #777 !important;
+            font-size: 12px !important;
+            display: inline !important;
+        }
+
+        #spw-close-notif {
+            position: absolute !important;
+            top: 12px !important;
+            right: 22px !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            border: none !important;
+            background: none !important;
+            cursor: pointer !important;
+            color: #000000 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+            width: auto !important;
+            height: auto !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+            z-index: 1000000 !important;
+        }
     `;
 
     widget.innerHTML = `
