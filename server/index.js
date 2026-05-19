@@ -167,15 +167,8 @@ app.get('/', (req, res) => {
 
 // 3. API route: Adds a new purchase linked to a specific client apiKey
 app.post('/api/add-purchase', async (req, res) => {
-    const clientPassword = req.headers['authorization'];
-    const secretPassword = "saas516";
-
-    if (!clientPassword || clientPassword.trim() !== secretPassword) {
-        return res.status(401).json({ message: "Access denied. Incorrect password!" });
-    }
-
     try {
-        // Uzimamo podatke iz forme i čistimo sve skrivene razmake pre upisa u bazu
+        // 1. Uzimamo podatke iz forme i čistimo razmake
         const cleanedData = {
             apiKey: req.body.apiKey ? req.body.apiKey.trim() : '',
             customerName: req.body.customerName ? req.body.customerName.trim() : '',
@@ -186,10 +179,28 @@ app.post('/api/add-purchase', async (req, res) => {
             textColor: req.body.textColor
         };
 
-        const newNotif = new Notification(cleanedData);
+        // 2. Bezbednosna provera: Da li uopšte imamo API ključ?
+        if (!cleanedData.apiKey) {
+            return res.status(401).json({ message: "Access denied. API Key is missing!" });
+        }
+
+        // 3. Proveravamo u bazi da li taj API ključ pripada nekom korisniku
+        const userExists = await User.findOne({ apiKey: cleanedData.apiKey });
+        if (!userExists) {
+            return res.status(401).json({ message: "Access denied. Invalid API Key!" });
+        }
+
+        // 4. Ako je ključ ispravan, pravimo novu notifikaciju i vezujemo je za tog korisnika
+        const newNotif = new Notification({
+            userId: userExists._id, // povezujemo kupovinu sa korisnikom koji je vlasnik vidžeta
+            ...cleanedData
+        });
+
         await newNotif.save();
         res.status(201).json({ message: "Added successfully!" });
+
     } catch (err) {
+        console.error("Greška pri čuvanju:", err);
         res.status(500).send("Error saving.");
     }
 });
