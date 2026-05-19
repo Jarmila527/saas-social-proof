@@ -124,15 +124,17 @@
 <body>
 
     <script>
+        // Security check: If there is no token, redirect to login page instantly
         const token = sessionStorage.getItem('admin_token');
+        if (!token) {
+            window.location.href = 'login.html';
+        }
 
-        // if (!token) {
-        //     window.location.href = '/login.html';
-        // }
-
+        // Logout function to clear session and redirect
         function logout() {
             sessionStorage.removeItem('admin_token');
-            window.location.href = '/login.html';
+            sessionStorage.removeItem('api_key');
+            window.location.href = 'login.html';
         }
     </script>
 
@@ -144,8 +146,8 @@
 
         <form id="purchase-form">
             <div class="form-group">
-                <label for="apiKey">Client API Key (Unique ID)</label>
-                <input type="text" id="apiKey" placeholder="eg client_marko_123" required>
+                <label for="apiKey">Your API Key (Managed Automatically)</label>
+                <input type="text" id="apiKey" readonly style="background: #e2e8f0; color: #4a5568; cursor: not-allowed;">
             </div>
 
             <div class="form-group">
@@ -189,10 +191,13 @@
     </div>
 
     <script>
+        // Automatically inject the logged-in user's API Key into the form field on page load
+        document.getElementById('apiKey').value = sessionStorage.getItem('api_key') || '';
+
         document.getElementById('purchase-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const lozinka = sessionStorage.getItem('admin_token');
+            const userToken = sessionStorage.getItem('admin_token');
 
             const data = {
                 apiKey: document.getElementById('apiKey').value.trim(),
@@ -209,21 +214,28 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': lozinka
+                        // Sending the secure JWT token in the correct Bearer format
+                        'Authorization': `Bearer ${userToken}`
                     },
                     body: JSON.stringify(data)
                 });
 
                 if (response.ok) {
                     alert('Notification successfully sent to the site!');
-                    document.getElementById('purchase-form').reset();
+                    
+                    // Reset the form but keep the API key filled in
+                    document.getElementById('name').value = '';
+                    document.getElementById('city').value = '';
+                    document.getElementById('product').value = '';
+                    document.getElementById('languageText').value = '';
                 } else {
                     const errData = await response.json();
-                    alert('Error: ' + errData.message);
+                    alert('Error: ' + (errData.error || errData.message));
                 }
 
             } catch (err) {
                 alert('An error occurred while connecting to the server.');
+                console.error("Add purchase error:", err);
             }
         })
     </script>
