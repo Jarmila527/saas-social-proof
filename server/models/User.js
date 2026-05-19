@@ -25,11 +25,15 @@ const userSchema = new mongoose.Schema({
 });
 
 // Auto-generate a unique API key before saving a new user
-userSchema.pre('save', function (next) {
-    if (!this.apiKey) {
-        this.apiKey = 'spw_' + crypto.randomBytes(16).toString('hex');
+UserSchema.pre('save', async function() {
+    if (!this.isModified('password')) return;
+
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+    } catch (err) {
+        throw err; 
     }
-    next();
 });
 
 module.exports = mongoose.model('User', userSchema);
