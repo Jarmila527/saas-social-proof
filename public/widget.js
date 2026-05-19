@@ -1,6 +1,7 @@
 (function () {
-    // 🔑 UNIQUE CLIENT KEY - Connected to your user account
-    const CLIENT_API_KEY = "client_c39182f13dae1e1f3203f24a9f1cfea7";
+    // 🔑 DYNAMIC CLIENT KEY - Reads the key from the client's website window object.
+    // If not found, it falls back to your master key as a backup.
+    const CLIENT_API_KEY = window.SAAS_CLIENT_API_KEY || "client_c39182f13dae1e1f3203f24a9f1cfea7";
 
     const style = document.createElement('style');
     style.innerHTML = `
