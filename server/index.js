@@ -205,6 +205,35 @@ app.post('/api/add-purchase', async (req, res) => {
     }
 });
 
+// 🌍 RUTA KOJU ĆE VIDŽET POZIVATI DA PREUZME PODATKE ZA PRIKAZ
+app.get('/api/get-purchases', async (req, res) => {
+    try {
+        const { apiKey } = req.query; // Vidžet šalje ključ kroz URL (npr. ?apiKey=client_...)
+
+        if (!apiKey) {
+            return res.status(400).json({ error: "API Key is required!" });
+        }
+
+        // 1. Pronalazimo korisnika kome pripada taj API ključ
+        const user = await User.findOne({ apiKey: apiKey.trim() });
+        if (!user) {
+            return res.status(404).json({ error: "Invalid API Key!" });
+        }
+
+        // 2. Izvlačimo poslednjih 5 kupovina tog korisnika iz baze, poređanih od najnovije
+        const purchases = await Notification.find({ userId: user._id })
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        // 3. Šaljemo niz kupovina nazad vidžetu
+        res.json(purchases);
+
+    } catch (err) {
+        console.error("Greška pri preuzimanju kupovina:", err);
+        res.status(500).json({ error: "Internal server error." });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`✅ The server is running on http://localhost:${PORT}`);
