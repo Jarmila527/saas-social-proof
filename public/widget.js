@@ -1,6 +1,6 @@
 (function () {
-    // UNIQUE CLIENT KEY - Change this for each client (e.g., "client_marko_123")
-    const CLIENT_API_KEY = "client_marko_123";
+    // 🔑 UNIQUE CLIENT KEY - Connected to your user account
+    const CLIENT_API_KEY = "client_c39182f13dae1e1f3203f24a9f1cfea7";
 
     const style = document.createElement('style');
     style.innerHTML = `
@@ -54,38 +54,34 @@
             min-width: 0 !important;
             min-height: 0 !important;
             z-index: 1000000 !important;
-            border-style: none !important; /* Brise okvir */
+            border-style: none !important;
         }
     `;
     document.head.appendChild(style);
 
     const widget = document.createElement('div');
     widget.id = 'social-proof-widget';
-    // widget.style.display = 'none';
 
     widget.innerHTML = `
         <button id="spw-close-notif">×</button>
         <div style="display: flex !important; align-items: center !important; gap: 12px !important; text-align: left !important; padding: 5px !important;">
             <div style="background: #eee !important; width: 42px !important; height: 42px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important;">👤</div>
             <div style="flex-grow: 1 !important; min-width: 0 !important; line-height: 1.4 !important;">
-                
                 <div style="display: block !important; font-size: 15px !important; white-space: nowrap !important;">
                     <strong id="customer-name" style="display: inline !important; float: none !important;">Loading...</strong> 
                     <span id="city-container" style="display: inline !important; float: none !important;">(<span id="city" style="display: inline !important; float: none !important;">...</span>)</span>
                 </div>
-                
                 <div style="display: block !important; font-size: 14px !important;">
                     <span id="action-text" style="display: inline !important; float: none !important;">...</span> 
                     <strong id="product-name" style="display: inline !important; float: none !important;">...</strong>
                 </div>
-                
                 <div id="time-ago" style="display: block !important; font-size: 11px !important; margin-top: 1px !important;">Loading time...</div>
             </div>
         </div>
     `;
     document.body.appendChild(widget);
 
-    // Function that counts how much time has passed since the purchase
+    // Function that calculates the relative time elapsed since the purchase
     function formatTimeAgo(dateString, isSerbian) {
         const createdDate = new Date(dateString);
         const now = new Date();
@@ -97,10 +93,7 @@
 
         const differenceInMinutes = Math.floor(differenceInSeconds / 60);
         if (differenceInMinutes < 60) {
-            if (isSerbian) {
-                return `Pre ${differenceInMinutes} min`;
-            }
-            return `${differenceInMinutes} minutes ago`;
+            return isSerbian ? `Pre ${differenceInMinutes} min` : `${differenceInMinutes} minutes ago`;
         }
 
         const differenceInHours = Math.floor(differenceInMinutes / 60);
@@ -118,16 +111,21 @@
         return `${differenceInDays} ${differenceInDays === 1 ? 'day' : 'days'} ago`;
     }
 
+    // Fetches live notification data from the backend server
     async function updateAndShowNotification() {
         try {
-            const response = await fetch(`https://saas-social-proof.onrender.com/api/last-purchase?apiKey=${CLIENT_API_KEY}&_cb=${new Date().getTime()}`);
+            // Send GET request with API Key and cache buster timestamp
+            const response = await fetch(`https://saas-social-proof.onrender.com/api/get-purchases?apiKey=${CLIENT_API_KEY}&_cb=${new Date().getTime()}`);
+            const rawData = await response.json();
 
-            const data = await response.json();
-
-            if (!data) {
-                console.log("Nema novih notifikacija za ovaj API ključ.");
+            // Check if the returned array contains any notification records
+            if (!rawData || rawData.length === 0) {
+                console.log("No new notifications found for this API Key.");
                 return;
             }
+
+            // Extract the most recent purchase record from the array
+            const data = rawData[0];
 
             if (data) {
                 document.getElementById('customer-name').innerText = data.customerName;
@@ -137,13 +135,14 @@
                 const action = data.languageText || "bought";
                 document.getElementById('action-text').innerText = action;
 
+                // Determine language context to apply proper relative time strings
                 const isSerbian = action.includes("kupio") || action.includes("narucio") || action.includes("naručio") || action.includes("poručio");
-
                 document.getElementById('time-ago').innerText = formatTimeAgo(data.createdAt, isSerbian);
 
                 const bg = data.bgColor || '#ffffff';
                 const text = data.textColor || '#1a202c';
 
+                // Apply dynamic styles and display the widget element
                 widget.style.setProperty('display', 'block', 'important');
                 widget.style.setProperty('background', bg, 'important');
                 widget.style.setProperty('color', text, 'important');
@@ -154,22 +153,22 @@
                 document.getElementById('time-ago').style.setProperty('color', text, 'important');
                 document.getElementById('time-ago').style.setProperty('opacity', '0.7', 'important');
                 document.getElementById('spw-close-notif').style.setProperty('color', text, 'important');
-
-                setTimeout(() => {
-                    widget.style.display = 'block';
-                }, 2000);
             }
         } catch (err) {
             console.error('SaaS Widget Error:', err);
         }
     }
 
+    // Event listener to handle manual widget closing
     document.addEventListener('click', function (e) {
         if (e.target && e.target.id === 'spw-close-notif') {
             widget.style.display = 'none';
         }
     });
 
+    // Run the cycle immediately on page load
     updateAndShowNotification();
+    
+    // Periodically poll the database for updates every 2 minutes
     setInterval(updateAndShowNotification, 120000);
 })();
