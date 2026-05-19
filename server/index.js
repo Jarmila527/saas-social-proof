@@ -102,23 +102,19 @@ app.post('/api/signup', async (req, res) => {
             return res.status(400).json({ error: "A user with this email already exists." });
         }
 
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-        // 🔑 GENERIŠEMO UNIKATNI API KLJUČ (npr. client_a7f3b2...)
         const generatedApiKey = 'client_' + crypto.randomBytes(16).toString('hex');
 
         const newUser = new User({
             email: email.toLowerCase().trim(),
-            password: hashedPassword,
-            apiKey: generatedApiKey // <-- OBAVEZNO ubacujemo ključ u novog korisnika!
+            password: password,
+            apiKey: generatedApiKey
         });
 
         await newUser.save();
 
         res.status(201).json({
             message: "Registration successful!",
-            apiKey: newUser.apiKey // Sada će ovo 100% poslati pravi ključ frontendu!
+            apiKey: newUser.apiKey
         });
 
     } catch (err) {
