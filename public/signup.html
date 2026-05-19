@@ -141,7 +141,7 @@
         <h2>Create account</h2>
         <p class="subtitle">Start boosting your conversions for free</p>
 
-        <form>
+        <form id="signupForm">
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" placeholder="John Doe" required>
@@ -166,6 +166,7 @@
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault(); // Prevent page reload
 
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const messageBox = document.getElementById('messageBox');
