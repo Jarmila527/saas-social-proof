@@ -1,19 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="widget.css">
-    <title>Widget</title>
-</head>
+    <title>Social Proof Tool - Boost Your Website Conversions</title>
+    <style>
+        /* 🎨 GLOBAL STYLES & VARIABLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background-color: #0f172a; /* Modern dark SaaS background */
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* 🧭 NAVIGATION BAR */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            color: #94a3b8;
+            margin-right: 25px;
+        }
+
+        .btn-login:hover {
+            color: #fff;
+        }
+
+        .btn-signup {
+            background: linear-gradient(to right, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+
+        /* 🚀 HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            font-weight: 800;
+            line-height: 1.2;
+            max-width: 800px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #94a3b8;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-cta {
+            background: linear-gradient(to right, #818cf8, #6366f1);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .main-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+        }
+    </style>
+</head>
 <body>
 
-    <h1>Client website</h1>
-    <p>This site does not have any widget in its code, it just "calls" it..</p>
+    <nav>
+        <div class="logo">SocialProof.io</div>
+        <div class="nav-links">
+            <a href="login.html" class="btn-login">Log In</a>
+            <a href="signup.html" class="btn-signup">Get Started Free</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Turn Website Visitors Into Customers Using Social Proof</h1>
+        <p>Display real-time customer purchases and build instant trust with new visitors. Takes less than a minute to set up on any website.</p>
+        
+        <div class="cta-buttons">
+            <a href="signup.html" class="main-cta">Create Free Account</a>
+        </div>
+    </section>
 
     <script src="widget.js"></script>
-</body>
 
+</body>
 </html>
