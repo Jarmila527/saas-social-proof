@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 
 // Defining the schema for our SaaS users/clients
 const userSchema = new mongoose.Schema({
