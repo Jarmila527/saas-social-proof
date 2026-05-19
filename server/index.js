@@ -7,6 +7,7 @@ const Notification = require('./models/Notification');
 const User = require('./models/User'); // Path to your User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 // Secret key used to sign and verify JSON Web Tokens (JWT)
 const JWT_SECRET = "your_super_secret_key_for_saas_123";
@@ -58,6 +59,8 @@ app.get('/api/last-purchase', async (req, res) => {
 });
 
 // ROUTE FOR NEW CLIENT REGISTRATION
+const crypto = require('crypto'); 
+
 app.post('/api/signup', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -74,16 +77,20 @@ app.post('/api/signup', async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+        // 🔑 GENERIŠEMO UNIKATNI API KLJUČ (npr. client_a7f3b2...)
+        const generatedApiKey = 'client_' + crypto.randomBytes(16).toString('hex');
+
         const newUser = new User({
             email: email.toLowerCase().trim(),
-            password: hashedPassword
+            password: hashedPassword,
+            apiKey: generatedApiKey // <-- OBAVEZNO ubacujemo ključ u novog korisnika!
         });
 
         await newUser.save();
 
         res.status(201).json({
             message: "Registration successful!",
-            apiKey: newUser.apiKey
+            apiKey: newUser.apiKey // Sada će ovo 100% poslati pravi ključ frontendu!
         });
 
     } catch (err) {
