@@ -27,14 +27,43 @@ mongoose.connect(process.env.MONGO_URI, {
     .catch(err => console.error('❌ Connection error:', err));
 
 // NOVA RUTA: Ovde proveravamo lozinku sa login.html stranice
-app.post('/api/login', (req, res) => {
-    const { password } = req.body;
-    const secretPassword = "saas516";
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
 
-    if (password && password.trim() === secretPassword) {
-        return res.status(200).json({ message: "Login successful" });
-    } else {
-        return res.status(401).json({ message: "Access denied. Incorrect password!" });
+        if (!email || !password) {
+            return res.status(400).json({ error: "Please provide both email and password." });
+        }
+
+        // Pronalazimo korisnika u bazi
+        const user = await User.findOne({ email: email.toLowerCase().trim() });
+        if (!user) {
+            return res.status(400).json({ error: "Invalid email or password." });
+        }
+
+        // Poredimo unetu šifru sa hešovanom šifrom iz baze pomoću bcrypt-a
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ error: "Invalid email or password." });
+        }
+
+        // Generišemo JWT token (koristimo JWT_SECRET iz okruženja ili fallback)
+        const token = jwt.sign(
+            { userId: user._id, email: user.email },
+            process.env.JWT_SECRET || 'super-tajna-sifra',
+            { expiresIn: '24h' }
+        );
+
+        // Vraćamo token i automatski njegov API ključ frontendu!
+        res.json({
+            message: "Login successful!",
+            token: token,
+            apiKey: user.apiKey
+        });
+
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).json({ error: "Internal server error." });
     }
 });
 
