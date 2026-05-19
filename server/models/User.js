@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Auto-generate a unique API key before saving a new user
-UserSchema.pre('save', async function() {
+userSchema.pre('save', async function() {
     if (!this.isModified('password')) return;
 
     try {
