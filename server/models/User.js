@@ -4,6 +4,10 @@ const bcrypt = require('bcrypt');
 
 // Defining the schema for our SaaS users/clients
 const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true,
@@ -26,14 +30,14 @@ const userSchema = new mongoose.Schema({
 });
 
 // Auto-generate a unique API key before saving a new user
-userSchema.pre('save', async function() {
+userSchema.pre('save', async function () {
     if (!this.isModified('password')) return;
 
     try {
         const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, salt);
     } catch (err) {
-        throw err; 
+        throw err;
     }
 });
 

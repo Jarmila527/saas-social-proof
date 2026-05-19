@@ -89,24 +89,60 @@ app.get('/api/last-purchase', async (req, res) => {
 
 // ROUTE FOR NEW CLIENT REGISTRATION
 
+// app.post('/api/signup', async (req, res) => {
+//     try {
+//         const { email, password } = req.body;
+
+//         if (!email || !password) {
+//             return res.status(400).json({ error: "Please provide both email and password." });
+//         }
+
+//         const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
+//         if (existingUser) {
+//             return res.status(400).json({ error: "A user with this email already exists." });
+//         }
+
+//         const generatedApiKey = 'client_' + crypto.randomBytes(16).toString('hex');
+
+//         const newUser = new User({
+//             email: email.toLowerCase().trim(),
+//             password: password,
+//             apiKey: generatedApiKey
+//         });
+
+//         await newUser.save();
+
+//         res.status(201).json({
+//             message: "Registration successful!",
+//             apiKey: newUser.apiKey
+//         });
+
+//     } catch (err) {
+//         console.error("Signup error:", err);
+//         res.status(500).json({ error: "Internal server error." });
+//     }
+// });
+
+// ROUTE FOR NEW CLIENT REGISTRATION
 app.post('/api/signup', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { name, email, password } = req.body; // Sad backend prepoznaje 'name'
 
-        if (!email || !password) {
-            return res.status(400).json({ error: "Please provide both email and password." });
+        if (!name || !email || !password) {
+            return res.status(400).json({ error: "All fields are required." });
         }
 
         const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
         if (existingUser) {
-            return res.status(400).json({ error: "A user with this email already exists." });
+            return res.status(400).json({ error: "User already exists." });
         }
 
         const generatedApiKey = 'client_' + crypto.randomBytes(16).toString('hex');
 
         const newUser = new User({
+            name: name,
             email: email.toLowerCase().trim(),
-            password: password,
+            password: password, // Model automatski hešuje šifru pre čuvanja
             apiKey: generatedApiKey
         });
 
@@ -114,9 +150,8 @@ app.post('/api/signup', async (req, res) => {
 
         res.status(201).json({
             message: "Registration successful!",
-            apiKey: newUser.apiKey
+            apiKey: generatedApiKey
         });
-
     } catch (err) {
         console.error("Signup error:", err);
         res.status(500).json({ error: "Internal server error." });
