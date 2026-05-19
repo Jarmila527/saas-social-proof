@@ -59,7 +59,6 @@ app.get('/api/last-purchase', async (req, res) => {
 });
 
 // ROUTE FOR NEW CLIENT REGISTRATION
-const crypto = require('crypto'); 
 
 app.post('/api/signup', async (req, res) => {
     try {
