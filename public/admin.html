@@ -172,12 +172,6 @@
             </div>
 
             <div class="form-group">
-                <label for="imageUrl">Slika (URL):</label>
-                <input type="text" id="imageUrl" class="form-control" placeholder="https://primer.com/slika.jpg">
-                <small class="text-muted">Optional</small>
-            </div>
-
-            <div class="form-group">
                 <label for="languageText">Action text (Widget language)</label>
                 <input type="text" id="languageText" placeholder="eg bought / je kupio / ordered" required>
             </div>
@@ -218,8 +212,7 @@
                 productName: document.getElementById('product').value.trim(),
                 languageText: document.getElementById('languageText').value.trim(),
                 bgColor: document.getElementById('bgColor').value,
-                textColor: document.getElementById('textColor').value,
-                imageUrl: document.getElementById('imageUrl').value
+                textColor: document.getElementById('textColor').value
             }
 
             try {
@@ -241,7 +234,6 @@
                     document.getElementById('city').value = '';
                     document.getElementById('product').value = '';
                     document.getElementById('languageText').value = '';
-                    document.getElementById('imageUrl').value = '';
                 } else {
                     const errData = await response.json();
                     alert('Error: ' + (errData.error || errData.message));

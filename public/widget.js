@@ -77,20 +77,6 @@
         document.getElementById('city').innerText = data.city;
         document.getElementById('product-name').innerText = data.productName;
 
-        const avatarImg = document.getElementById('customer-avatar');
-        const avatarEmoji = document.getElementById('avatar-emoji');
-
-        if (data.imageUrl && data.imageUrl.trim() !== "") {
-            // Ako postoji URL, pokaži sliku, sakrij emoji
-            avatarImg.src = data.imageUrl;
-            avatarImg.style.display = 'block';
-            avatarEmoji.style.display = 'none';
-        } else {
-            // Ako NEMA URL-a, sakrij sliku, pokaži emoji
-            avatarImg.style.display = 'none';
-            avatarEmoji.style.display = 'block';
-        }
-
         const action = data.languageText || "bought";
         document.getElementById('action-text').innerText = action;
 

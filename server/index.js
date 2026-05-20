@@ -179,8 +179,7 @@ app.post('/api/add-purchase', async (req, res) => {
             productName: req.body.productName ? req.body.productName.trim() : '',
             languageText: req.body.languageText ? req.body.languageText.trim() : '',
             bgColor: req.body.bgColor,
-            textColor: req.body.textColor,
-            imageUrl: req.body.imageUrl ? req.body.imageUrl.trim() : ''
+            textColor: req.body.textColor
         };
 
         // 2. Bezbednosna provera: Da li uopšte imamo API ključ?
