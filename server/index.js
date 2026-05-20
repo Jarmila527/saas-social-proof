@@ -68,20 +68,43 @@ app.post('/api/login', async (req, res) => {
 });
 
 // 1. API route: Gets the latest notification for a SPECIFIC client using apiKey
-app.get('/api/last-purchase', async (req, res) => {
+// app.get('/api/last-purchase', async (req, res) => {
+//     try {
+//         let { apiKey } = req.query; // Reads ?apiKey=something from the URL
+
+//         if (!apiKey) {
+//             return res.status(400).json({ message: "Missing apiKey parameter" });
+//         }
+
+//         // Čistimo razmake za svaki slučaj
+//         apiKey = apiKey.trim();
+
+//         // Database finds the latest notification that matches this specific apiKey
+//         const lastNotif = await Notification.findOne({ apiKey: apiKey }).sort({ createdAt: -1 });
+//         res.json(lastNotif);
+//     } catch (err) {
+//         res.status(500).json({ message: "Database error" });
+//     }
+// });
+
+app.get('/api/last-purchases', async (req, res) => { // Promenio sam naziv u "last-purchases" (množina)
     try {
-        let { apiKey } = req.query; // Reads ?apiKey=something from the URL
+        let { apiKey } = req.query;
 
         if (!apiKey) {
             return res.status(400).json({ message: "Missing apiKey parameter" });
         }
 
-        // Čistimo razmake za svaki slučaj
         apiKey = apiKey.trim();
 
-        // Database finds the latest notification that matches this specific apiKey
-        const lastNotif = await Notification.findOne({ apiKey: apiKey }).sort({ createdAt: -1 });
-        res.json(lastNotif);
+        // 1. Koristimo .find() umesto .findOne() jer želimo niz (listu)
+        // 2. Dodajemo .limit(5) da dobijemo samo poslednjih 5
+        const notifications = await Notification.find({ apiKey: apiKey })
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        // Vraćamo niz notifikacija
+        res.json(notifications);
     } catch (err) {
         res.status(500).json({ message: "Database error" });
     }
