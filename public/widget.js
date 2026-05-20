@@ -84,7 +84,7 @@
             currentIndex = (currentIndex + 1) % notificationQueue.length; // 0, 1, 2, 3, 4, 0...
             displayNotification(notificationQueue[currentIndex]);
         }
-    }, 30000); // Menja notifikaciju svakih 30 sekundi
+    }, 60000); // Menja notifikaciju svakih 1 minut
 
     // Close dugme
     document.addEventListener('click', (e) => {
