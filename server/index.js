@@ -222,10 +222,6 @@ app.get('/api/get-purchases', async (req, res) => {
             .sort({ createdAt: -1 })
             .limit(5);
 
-        console.log("Upit za apiKey:", apiKey.trim());
-        console.log("Pronađeno u bazi:", purchases.length, "zapisa");
-        console.log("Podaci:", purchases);
-
         res.json(purchases);
 
     } catch (err) {
