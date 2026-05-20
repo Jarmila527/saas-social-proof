@@ -94,5 +94,5 @@
     // Inicijalno učitavanje
     fetchNotifications();
     // Refresh API-ja na svakih 2 min (da se povuku nove ako ih klijent doda u bazu)
-    setInterval(fetchNotifications, 120000);
+    setInterval(fetchNotifications, 10000);
 })();
