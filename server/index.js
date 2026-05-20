@@ -208,7 +208,7 @@ app.post('/api/add-purchase', async (req, res) => {
     }
 });
 
-// 🌍 RUTA KOJU ĆE VIDŽET POZIVATI DA PREUZME PODATKE ZA PRIKAZ
+// RUTA KOJU ĆE VIDŽET POZIVATI DA PREUZME PODATKE ZA PRIKAZ
 app.get('/api/get-purchases', async (req, res) => {
     try {
         const { apiKey } = req.query; // Vidžet šalje ključ kroz URL (npr. ?apiKey=client_...)
@@ -221,6 +221,10 @@ app.get('/api/get-purchases', async (req, res) => {
         const purchases = await Notification.find({ apiKey: apiKey.trim() })
             .sort({ createdAt: -1 })
             .limit(5);
+
+        console.log("Upit za apiKey:", apiKey.trim());
+        console.log("Pronađeno u bazi:", purchases.length, "zapisa");
+        console.log("Podaci:", purchases);
 
         res.json(purchases);
 
