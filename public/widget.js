@@ -14,43 +14,21 @@
     const widget = document.createElement('div');
     widget.id = 'social-proof-widget';
     widget.innerHTML = `
-        // <button id="spw-close-notif">×</button>
-        // <div style="display: flex !important; align-items: center !important; gap: 12px !important; text-align: left !important; padding: 5px !important;">
-        //     <div style="background: #eee !important; width: 42px !important; height: 42px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important;">👤</div>
-        //     <div style="flex-grow: 1 !important; min-width: 0 !important; line-height: 1.4 !important;">
-        //         <div style="display: block !important; font-size: 15px !important; white-space: nowrap !important;">
-        //             <strong id="customer-name">Loading...</strong> 
-        //             <span id="city-container">(<span id="city">...</span>)</span>
-        //         </div>
-        //         <div style="display: block !important; font-size: 14px !important;">
-        //             <span id="action-text">...</span> 
-        //             <strong id="product-name">...</strong>
-        //         </div>
-        //         <div id="time-ago" style="display: block !important; font-size: 11px !important; margin-top: 1px !important; opacity: 0.7;">Loading...</div>
-        //     </div>
-        // </div>
-
         <button id="spw-close-notif">×</button>
-    <div style="display: flex !important; align-items: center !important; gap: 12px !important; text-align: left !important; padding: 5px !important;">
-        
-        <div id="avatar-wrapper" style="width: 42px !important; height: 42px !important; flex-shrink: 0 !important; border-radius: 50% !important; overflow: hidden !important; background: #eee !important; display: flex !important; align-items: center !important; justify-content: center !important;">
-            <img id="customer-avatar" src="" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: none;">
-            <div id="avatar-emoji" style="font-size: 20px !important;">👤</div>
-        </div>
-        
-        <div style="flex-grow: 1 !important; min-width: 0 !important; line-height: 1.4 !important;">
-            <div style="display: block !important; font-size: 15px !important; white-space: nowrap !important;">
-                <strong id="customer-name">Loading...</strong> 
-                <span id="city-container">(<span id="city">...</span>)</span>
+        <div style="display: flex !important; align-items: center !important; gap: 12px !important; text-align: left !important; padding: 5px !important;">
+            <div style="background: #eee !important; width: 42px !important; height: 42px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important;">👤</div>
+            <div style="flex-grow: 1 !important; min-width: 0 !important; line-height: 1.4 !important;">
+                <div style="display: block !important; font-size: 15px !important; white-space: nowrap !important;">
+                    <strong id="customer-name">Loading...</strong> 
+                    <span id="city-container">(<span id="city">...</span>)</span>
+                </div>
+                <div style="display: block !important; font-size: 14px !important;">
+                    <span id="action-text">...</span> 
+                    <strong id="product-name">...</strong>
+                </div>
+                <div id="time-ago" style="display: block !important; font-size: 11px !important; margin-top: 1px !important; opacity: 0.7;">Loading...</div>
             </div>
-            <div style="display: block !important; font-size: 14px !important;">
-                <span id="action-text">...</span> 
-                <strong id="product-name">...</strong>
-            </div>
-            <div id="time-ago" style="display: block !important; font-size: 11px !important; margin-top: 1px !important; opacity: 0.7;">Loading...</div>
         </div>
-    </div>
-
     `;
     document.body.appendChild(widget);
 
