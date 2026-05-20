@@ -54,14 +54,22 @@
         document.getElementById('customer-name').innerText = data.customerName;
         document.getElementById('city').innerText = data.city;
         document.getElementById('product-name').innerText = data.productName;
+
         const action = data.languageText || "bought";
         document.getElementById('action-text').innerText = action;
+
         const isSerbian = action.includes("kupio") || action.includes("narucio") || action.includes("poručio");
         document.getElementById('time-ago').innerText = formatTimeAgo(data.createdAt, isSerbian);
-        
+
         widget.style.background = data.bgColor || '#ffffff';
         widget.style.color = data.textColor || '#1a202c';
         widget.style.display = 'block';
+
+        clearTimeout(window.hideTimer);
+
+        window.hideTimer = setTimeout(() => {
+            widget.style.display = 'none';
+        }, 10000);
     }
 
     // Poziva API i puni niz
