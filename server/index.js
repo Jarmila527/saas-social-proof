@@ -68,28 +68,9 @@ app.post('/api/login', async (req, res) => {
 });
 
 // 1. API route: Gets the latest notification for a SPECIFIC client using apiKey
-// app.get('/api/last-purchase', async (req, res) => {
-//     try {
-//         let { apiKey } = req.query; // Reads ?apiKey=something from the URL
-
-//         if (!apiKey) {
-//             return res.status(400).json({ message: "Missing apiKey parameter" });
-//         }
-
-//         // Čistimo razmake za svaki slučaj
-//         apiKey = apiKey.trim();
-
-//         // Database finds the latest notification that matches this specific apiKey
-//         const lastNotif = await Notification.findOne({ apiKey: apiKey }).sort({ createdAt: -1 });
-//         res.json(lastNotif);
-//     } catch (err) {
-//         res.status(500).json({ message: "Database error" });
-//     }
-// });
-
 app.get('/api/last-purchases', async (req, res) => { // Promenio sam naziv u "last-purchases" (množina)
     try {
-        let { apiKey } = req.query;
+        let { apiKey } = req.query;  // Reads ?apiKey=something from the URL
 
         if (!apiKey) {
             return res.status(400).json({ message: "Missing apiKey parameter" });
@@ -109,42 +90,6 @@ app.get('/api/last-purchases', async (req, res) => { // Promenio sam naziv u "la
         res.status(500).json({ message: "Database error" });
     }
 });
-
-// ROUTE FOR NEW CLIENT REGISTRATION
-
-// app.post('/api/signup', async (req, res) => {
-//     try {
-//         const { email, password } = req.body;
-
-//         if (!email || !password) {
-//             return res.status(400).json({ error: "Please provide both email and password." });
-//         }
-
-//         const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
-//         if (existingUser) {
-//             return res.status(400).json({ error: "A user with this email already exists." });
-//         }
-
-//         const generatedApiKey = 'client_' + crypto.randomBytes(16).toString('hex');
-
-//         const newUser = new User({
-//             email: email.toLowerCase().trim(),
-//             password: password,
-//             apiKey: generatedApiKey
-//         });
-
-//         await newUser.save();
-
-//         res.status(201).json({
-//             message: "Registration successful!",
-//             apiKey: newUser.apiKey
-//         });
-
-//     } catch (err) {
-//         console.error("Signup error:", err);
-//         res.status(500).json({ error: "Internal server error." });
-//     }
-// });
 
 // ROUTE FOR NEW CLIENT REGISTRATION
 app.post('/api/signup', async (req, res) => {
