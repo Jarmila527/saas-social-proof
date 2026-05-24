@@ -256,7 +256,6 @@
 
             z-index: -1;
         }
-
     </style>
 </head>
 
@@ -303,8 +302,8 @@
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
 
-                if(password.length < 6) {
-                    if(messageBox) {
+                if (password.length < 6) {
+                    if (messageBox) {
                         messageBox.style.display = 'block';
                         messageBox.innerHTML = "Password must be at least 6 characters"
                     }
@@ -327,8 +326,15 @@
                     const data = await response.json();
 
                     if (response.ok) {
+                        const targetUrl = `installation.html?key=${data.apiKey}`;
+                        window.location.href = targetUrl;
                         if (messageBox) {
-                            messageBox.innerHTML = `<strong>Success!</strong> Your API Key: <br> ${data.apiKey}`;
+                            // messageBox.innerHTML = `<strong>Success!</strong> Your API Key: <br> ${data.apiKey}
+                            // <br>
+                            // <a href="installation.html" style="display: block; padding: 12px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; text-align: center; font-weight: bold; font-family: sans-serif;">
+                            //  Go to Installation Guide
+                            // </a>
+                            // `;
                         }
                         form.reset();
                     } else {
