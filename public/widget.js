@@ -7,7 +7,7 @@
     style.innerHTML = `
         @keyframes spwSlideIn { from { transform: translateX(-120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         #social-proof-widget { display: none; position: fixed !important; bottom: 20px !important; left: 20px !important; width: 360px !important; max-width: 90% !important; padding: 15px !important; border-radius: 50px !important; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important; border: 1px solid #eee !important; z-index: 999999 !important; font-family: 'Arial', sans-serif !important; box-sizing: border-box !important; min-width: 300px !important; text-align: left !important; overflow: hidden !important; animation: spwSlideIn 0.5s ease-out !important; }
-        #spw-close-notif { position: absolute !important; top: 7px !important; right: 30px !important; font-size: 20px !important; font-weight: bold !important; border: none !important; background: none !important; cursor: pointer !important; padding: 0 !important; line-height: 1 !important; z-index: 1000000 !important; }
+        #spw-close-notif { position: absolute !important; top: 7px !important; right: 30px !important; font-size: 20px !important; font-weight: bold !important; border: none !important; background: none !important; color: inherit !important; cursor: pointer !important; padding: 0 !important; line-height: 1 !important; z-index: 1000000 !important; }
     `;
     document.head.appendChild(style);
 
