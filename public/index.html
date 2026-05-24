@@ -21,7 +21,6 @@
             overflow-x: hidden;
         }
 
-        /* 🧭 NAVIGATION BAR */
         nav {
             display: flex;
             justify-content: space-between;
@@ -72,9 +71,8 @@
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
         }
 
-        /* 🚀 HERO SECTION */
         .hero {
-            min-height: 100vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -124,8 +122,6 @@
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
         }
 
-        /* ✨ ANIMATED BACKGROUND */
-
         body::before {
             content: "";
 
@@ -152,8 +148,6 @@
             }
         }
 
-        /* GRID OVERLAY */
-
         body::after {
             content: "";
 
@@ -171,8 +165,6 @@
             mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
         }
 
-        /* NAVBAR IMPROVEMENT */
-
         nav {
             animation: fadeDown 1s ease;
         }
@@ -188,8 +180,6 @@
                 transform: translateY(0);
             }
         }
-
-        /* HERO ANIMATION */
 
         .hero h1 {
             animation: fadeUp 1s ease forwards;
@@ -218,8 +208,6 @@
                 transform: translateY(0);
             }
         }
-
-        /* PREMIUM CTA */
 
         .main-cta {
             position: relative;
@@ -250,8 +238,6 @@
         .main-cta:hover::before {
             left: 130%;
         }
-
-        /* HERO GLOW */
 
         .hero {
             position: relative;
@@ -289,8 +275,6 @@
                 opacity: 0.22;
             }
         }
-
-        /* FLOATING BADGES */
 
         .floating-badge {
             position: absolute;
@@ -334,6 +318,257 @@
                 transform: translateY(-12px);
             }
         }
+
+        .trusted-by {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .trusted-by p {
+            color: #94a3b8;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            opacity: 0.6;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .features {
+            padding-bottom: 60px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0 20px;
+            }
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #38bdf8;
+            /* Boja koja prati logo */
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            /* Da se prebace u novi red na mobilnom */
+            margin-top: 20px;
+        }
+
+        .company-item {
+            display: flex;
+            align-items: center;
+            /* Vertikalno poravnanje ikonice i teksta */
+            gap: 10px;
+            /* Razmak između ikonice i teksta */
+            color: #94a3b8;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .company-item:hover {
+            color: #ffffff;
+        }
+
+        .company-item i {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.5;
+        }
+
+        .icon-wrapper {
+            background: rgba(56, 189, 248, 0.1);
+            /* Blaga plava pozadina */
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #38bdf8;
+            /* Tvoja plava boja */
+        }
+
+        .icon-wrapper i {
+            width: 24px;
+            height: 24px;
+        }
+
+        .notification-section {
+            padding: 80px 8%;
+        }
+
+        .notification-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .text-block {
+            max-width: 450px;
+        }
+
+        .text-block h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #f8fafc;
+        }
+
+        .text-block p {
+            color: #94a3b8;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .cta-link {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .cta-link:hover {
+            opacity: 0.8;
+        }
+
+        /* Widgeti dizajn */
+        .widget-block {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .popup-widget {
+            background: white;
+            color: #1e293b;
+            padding: 15px 20px;
+            border-radius: 36px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .counter-widget {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .avatar-placeholder {
+            width: 40px;
+            height: 40px;
+            background: #e2e8f0;
+            border-radius: 50%;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 900px) {
+            .notification-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .text-block {
+                max-width: 100%;
+            }
+        }
+
+        .footer {
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #94a3b8;
+            background: rgba(15, 23, 42, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content h3 {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .footer-content p {
+            font-size: 16px;
+            max-width: 400px;
+        }
+
+        .footer-divider {
+            width: 100%;
+            max-width: 600px;
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+
+        .footer-bottom {
+            font-size: 14px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 
@@ -364,13 +599,85 @@
             ⚡ Live visitors
         </div>
     </section>
+    <section class="trusted-by">
+        <p>Trusted by industry leaders</p>
+        <div class="logo-container">
+            <div class="company-item"><i data-lucide="wind"></i> AeroDynamics</div>
+            <div class="company-item"><i data-lucide="cpu"></i> QuantumSol</div>
+            <div class="company-item"><i data-lucide="git-branch"></i> VertexGroup</div>
+            <div class="company-item"><i data-lucide="layers"></i> InnovatePro</div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">How It Works</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-wrapper"><i data-lucide="code"></i></div>
+                <h3>1. Integrate Snippet</h3>
+                <p>A single line of code is all it takes to get started on any platform.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper"><i data-lucide="database"></i></div>
+                <h3>2. Manage Notifications</h3>
+                <p>Log in to your dashboard to manually add and manage your custom activity notifications.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper"><i data-lucide="trending-up"></i></div>
+                <h3>3. Show Trust</h3>
+                <p>Instantly display activity notifications to your new visitors.</p>
+            </div>
+        </div>
+    </section>
+    <section class="notification-section">
+        <div class="notification-container">
+            <div class="text-block">
+                <h2>Sales Notifications</h2>
+                <p>Turn your store's activity into a powerful marketing asset to build instant trust with your visitors.
+                </p>
+                <a href="#" class="cta-link">Learn More <i data-lucide="arrow-right"></i></a>
+            </div>
+
+            <div class="widget-block">
+                <div class="popup-widget">
+                    <div class="avatar-placeholder"></div>
+                    <div class="popup-info">
+                        <strong>Alby McClenny</strong> (Chicago)<br>
+                        bought Widget
+                        <small>7 days ago</small>
+                    </div>
+                </div>
+
+                <div class="counter-widget">
+                    <i data-lucide="users"></i>
+                    <span class="count">1,325</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>SocialProof.io</h3>
+            <p>Making trust visible. Build customer confidence in minutes.</p>
+        </div>
+
+        <hr class="footer-divider">
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 SocialProof.io. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         window.SAAS_CLIENT_API_KEY = "client_34b635b7757a78f9fbbf2f0efb22fe62";
     </script>
     <script src="https://saas-social-proof.onrender.com/widget.js"></script>
 
-    <!-- <script src="widget.js"></script> -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Ovo pokreće ikonice
+        lucide.createIcons();
+    </script>
 
 </body>
 
