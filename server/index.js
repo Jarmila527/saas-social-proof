@@ -126,42 +126,6 @@ app.post('/api/signup', async (req, res) => {
     }
 });
 
-// ROUTE FOR EXISTING CLIENT LOGIN
-app.post('/api/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ error: "Please provide both email and password." });
-        }
-
-        const user = await User.findOne({ email: email.toLowerCase().trim() });
-        if (!user) {
-            return res.status(400).json({ error: "Invalid email or password." });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ error: "Invalid email or password." });
-        }
-
-        const token = jwt.sign(
-            { userId: user._id, apiKey: user.apiKey },
-            JWT_SECRET,
-            { expiresIn: '24h' }
-        );
-
-        res.json({
-            message: "Login successful!",
-            token: token,
-            apiKey: user.apiKey
-        });
-
-    } catch (err) {
-        console.error("Login error:", err);
-        res.status(500).json({ error: "Internal server error." });
-    }
-});
 
 // 2. Home page
 app.get('/', (req, res) => {
@@ -216,11 +180,20 @@ app.get('/api/get-purchases', async (req, res) => {
         if (!apiKey) {
             return res.status(400).json({ error: "API Key is required!" });
         }
+        // 1. Proveri korisnika
+        const user = await User.findOne({ apiKey: apiKey.trim() });
+        if (!user) return res.status(404).json({ error: "Invalid API Key" });
+
+        // 2. Logika za ograničenje
+        let query = { apiKey: apiKey.trim() };
+
+        // Ako NIJE premium, ograniči broj notifikacija na npr. 3
+        const limit = user.plan === 'premium' ? 50 : 3;
 
         // 🎯 Vratile smo bezbednost! Tražimo kupovine koje imaju TAČNO ovaj apiKey
         const purchases = await Notification.find({ apiKey: apiKey.trim() })
             .sort({ createdAt: -1 })
-            .limit(5);
+            .limit(limit);
 
         res.json(purchases);
 

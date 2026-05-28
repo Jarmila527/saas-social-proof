@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    plan: {
+        type: String,
+        default: 'free'
     }
 });
 
