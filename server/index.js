@@ -190,7 +190,7 @@ app.get('/api/get-purchases', async (req, res) => {
         // Ako NIJE premium, ograniči broj notifikacija na npr. 3
         const limit = user.plan === 'premium' ? 50 : 3;
 
-        // 🎯 Vratile smo bezbednost! Tražimo kupovine koje imaju TAČNO ovaj apiKey
+        // 🎯 Vratili smo bezbednost! Tražimo kupovine koje imaju TAČNO ovaj apiKey
         const purchases = await Notification.find({ apiKey: apiKey.trim() })
             .sort({ createdAt: -1 })
             .limit(limit);

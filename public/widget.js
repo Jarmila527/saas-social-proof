@@ -2,7 +2,7 @@
     // 🔑 DYNAMIC CLIENT KEY
     const CLIENT_API_KEY = window.SAAS_CLIENT_API_KEY || "client_c39182f13dae1e1f3203f24a9f1cfea7";
 
-    // --- STILOVI (ostaju isti) ---
+
     const style = document.createElement('style');
     style.innerHTML = `
         @keyframes spwSlideIn { from { transform: translateX(-120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
