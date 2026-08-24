@@ -119,5 +119,5 @@
 
     // Inicijalno učitavanje
     fetchNotifications();
-    setInterval(fetchNotifications, 30000);
+    setInterval(fetchNotifications, 300000);
 })();
