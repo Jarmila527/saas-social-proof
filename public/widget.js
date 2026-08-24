@@ -36,17 +36,39 @@
     let notificationQueue = []; // Ovde čuvamo niz od 5 notifikacija
     let currentIndex = 0; // Brojač koji pratimo
 
+    // function formatTimeAgo(dateString, isSerbian) {
+    //     const createdDate = new Date(dateString);
+    //     const now = new Date();
+    //     const diffSec = Math.floor((now - createdDate) / 1000);
+    //     if (diffSec < 60) return isSerbian ? "Pre nekoliko trenutaka" : "A few moments ago";
+    //     const diffMin = Math.floor(diffSec / 60);
+    //     if (diffMin < 60) return isSerbian ? `Pre ${diffMin} min` : `${diffMin} min ago`;
+    //     const diffHour = Math.floor(diffMin / 60);
+    //     if (diffHour < 24) return isSerbian ? `Pre ${diffHour} ${diffHour === 1 ? 'sat' : 'sata'}` : `${diffHour} hours ago`;
+    //     const diffDay = Math.floor(diffHour / 24);
+    //     return isSerbian ? `Pre ${diffDay} ${diffDay === 1 ? 'dan' : 'dana'}` : `${diffDay} days ago`;
+    // }
+
     function formatTimeAgo(dateString, isSerbian) {
-        const createdDate = new Date(dateString);
-        const now = new Date();
-        const diffSec = Math.floor((now - createdDate) / 1000);
-        if (diffSec < 60) return isSerbian ? "Pre nekoliko trenutaka" : "A few moments ago";
-        const diffMin = Math.floor(diffSec / 60);
-        if (diffMin < 60) return isSerbian ? `Pre ${diffMin} min` : `${diffMin} min ago`;
-        const diffHour = Math.floor(diffMin / 60);
-        if (diffHour < 24) return isSerbian ? `Pre ${diffHour} ${diffHour === 1 ? 'sat' : 'sata'}` : `${diffHour} hours ago`;
-        const diffDay = Math.floor(diffHour / 24);
-        return isSerbian ? `Pre ${diffDay} ${diffDay === 1 ? 'dan' : 'dana'}` : `${diffDay} days ago`;
+        // Generiše nasumičan broj minuta između 1 i 120 (maksimalno 2 sata)
+        const randomMinutes = Math.floor(Math.random() * 120) + 1;
+
+        if (randomMinutes >= 60) {
+            const fullHours = Math.floor(randomMinutes / 60);
+            const remainingMins = randomMinutes % 60;
+
+            if (isSerbian) {
+                return remainingMins === 0
+                    ? `Pre ${fullHours} ${fullHours === 1 ? 'sat' : 'sata'}`
+                    : `Pre ${fullHours}h ${remainingMins} min`;
+            } else {
+                return remainingMins === 0
+                    ? `${fullHours} hours ago`
+                    : `${fullHours}h ${remainingMins}m ago`;
+            }
+        }
+
+        return isSerbian ? `Pre ${randomMinutes} min` : `${randomMinutes} min ago`;
     }
 
     // Funkcija koja menja sadržaj widgeta na ekranu
