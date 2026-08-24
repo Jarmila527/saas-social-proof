@@ -34,11 +34,12 @@
     // --- LOGIKA ---
     let notificationQueue = []; 
     
-    // Pamti tačno kog korisnika je poslednji put prikazivao preko localStorage-a
+    // Čitanje sačuvanog stanja iz memorije pretraživača
     let currentIndex = parseInt(localStorage.getItem('spw_current_index')) || 0;
     let currentSimulatedMinutes = parseInt(localStorage.getItem('spw_simulated_minutes')) || 1;
 
-    function getSequentialTime(isSerbian) {
+    // Funkcija koja samo formatira i vraća trenutno vreme bez menjanja brojača
+    function formatCurrentTime(isSerbian) {
         let timeString = "";
         
         if (currentSimulatedMinutes >= 60) {
@@ -58,15 +59,16 @@
             timeString = isSerbian ? `Pre ${currentSimulatedMinutes} min` : `${currentSimulatedMinutes} min ago`;
         }
 
+        return timeString;
+    }
+
+    // Funkcija koja pomera vreme napred za 3 minuta (poziva se samo pri rotaciji)
+    function advanceTime() {
         currentSimulatedMinutes += 3; 
-        
         if (currentSimulatedMinutes > 120) {
             currentSimulatedMinutes = 1;
         }
-
         localStorage.setItem('spw_simulated_minutes', currentSimulatedMinutes);
-
-        return timeString;
     }
 
     // Funkcija koja menja sadržaj widgeta na ekranu
@@ -81,7 +83,9 @@
         document.getElementById('action-text').innerText = action;
 
         const isSerbian = action.includes("kupio") || action.includes("narucio") || action.includes("poručio");
-        document.getElementById('time-ago').innerText = getSequentialTime(isSerbian);
+        
+        // Prikazujemo trenutno vreme bez dodavanja minuta na refresh
+        document.getElementById('time-ago').innerText = formatCurrentTime(isSerbian);
 
         widget.style.background = data.bgColor || '#ffffff';
         widget.style.color = data.textColor || '#1a202c';
@@ -103,7 +107,6 @@
             if (data && data.length > 0) {
                 notificationQueue = data; 
                 
-                // Osiguravamo da index ne izađe van granica niza ako se broj korisnika promenio
                 if (currentIndex >= notificationQueue.length) {
                     currentIndex = 0;
                 }
@@ -113,13 +116,14 @@
         } catch (err) { console.error('SaaS Widget Error:', err); }
     }
 
-    // Kružna rotacija notifikacija na svakih 35 sekundi
+    // Kružna rotacija na svakih 35 sekundi – ovde se vreme pomera za 3 minuta
     setInterval(() => {
         if (notificationQueue.length > 0) {
             currentIndex = (currentIndex + 1) % notificationQueue.length; 
-            
-            // Čuvamo novi indeks u memoriju pretraživača
             localStorage.setItem('spw_current_index', currentIndex);
+
+            // Pomeramo vreme napred samo kada se prebaci na sledeću karticu!
+            advanceTime();
 
             displayNotification(notificationQueue[currentIndex]);
         }
