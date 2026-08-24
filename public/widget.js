@@ -2,7 +2,6 @@
     // 🔑 DYNAMIC CLIENT KEY
     const CLIENT_API_KEY = window.SAAS_CLIENT_API_KEY || "client_c39182f13dae1e1f3203f24a9f1cfea7";
 
-
     const style = document.createElement('style');
     style.innerHTML = `
         @keyframes spwSlideIn { from { transform: translateX(-120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
@@ -33,25 +32,11 @@
     document.body.appendChild(widget);
 
     // --- LOGIKA ---
-    let notificationQueue = []; // Ovde čuvamo niz od 5 notifikacija
-    let currentIndex = 0; // Brojač koji pratimo
+    let notificationQueue = [];
+    let currentIndex = 0;
     let currentSimulatedMinutes = 1; // Počinjemo od 1 minuta
 
-    // function formatTimeAgo(dateString, isSerbian) {
-    //     const createdDate = new Date(dateString);
-    //     const now = new Date();
-    //     const diffSec = Math.floor((now - createdDate) / 1000);
-    //     if (diffSec < 60) return isSerbian ? "Pre nekoliko trenutaka" : "A few moments ago";
-    //     const diffMin = Math.floor(diffSec / 60);
-    //     if (diffMin < 60) return isSerbian ? `Pre ${diffMin} min` : `${diffMin} min ago`;
-    //     const diffHour = Math.floor(diffMin / 60);
-    //     if (diffHour < 24) return isSerbian ? `Pre ${diffHour} ${diffHour === 1 ? 'sat' : 'sata'}` : `${diffHour} hours ago`;
-    //     const diffDay = Math.floor(diffHour / 24);
-    //     return isSerbian ? `Pre ${diffDay} ${diffDay === 1 ? 'dan' : 'dana'}` : `${diffDay} days ago`;
-    // }
-
     function getSequentialTime(isSerbian) {
-        // Prikazujemo trenutne minute
         let timeString = "";
 
         if (currentSimulatedMinutes >= 60) {
@@ -71,11 +56,10 @@
             timeString = isSerbian ? `Pre ${currentSimulatedMinutes} min` : `${currentSimulatedMinutes} min ago`;
         }
 
-        // Pripremamo sledeće vreme za sledeću rotaciju (uvećavamo za npr. 10-15 minuta ili kako želiš, 
-        // ili za 1 minut ako hoćeš postepeno, s tim što ćemo ga ovde npr. uvećavati za 15 min pri svakoj promeni)
+        // Povećavamo za 15 minuta pri svakoj sledećoj kartici
         currentSimulatedMinutes += 15;
 
-        // Ako pređe 120 minuta (2 sata), vraćamo ga na 1 minut ispočetka!
+        // Ako predje 2 sata (120 min), vraćamo na 1 minut ispočetka
         if (currentSimulatedMinutes > 120) {
             currentSimulatedMinutes = 1;
         }
@@ -93,7 +77,7 @@
         document.getElementById('action-text').innerText = action;
 
         const isSerbian = action.includes("kupio") || action.includes("narucio") || action.includes("poručio");
-        document.getElementById('time-ago').innerText = formatTimeAgo(data.createdAt, isSerbian);
+        document.getElementById('time-ago').innerText = getSequentialTime(isSerbian);
 
         widget.style.background = data.bgColor || '#ffffff';
         widget.style.color = data.textColor || '#1a202c';
@@ -113,9 +97,9 @@
             const data = await response.json();
 
             if (data && data.length > 0) {
-                notificationQueue = data; // Čuvamo svih 5 u niz
-                currentIndex = 0; // Resetujemo na prvu
-                displayNotification(notificationQueue[currentIndex]); // Prikazujemo prvu odmah
+                notificationQueue = data;
+                currentIndex = 0;
+                displayNotification(notificationQueue[currentIndex]);
             }
         } catch (err) { console.error('SaaS Widget Error:', err); }
     }
@@ -123,10 +107,10 @@
     // Kružna rotacija notifikacija
     setInterval(() => {
         if (notificationQueue.length > 0) {
-            currentIndex = (currentIndex + 1) % notificationQueue.length; // 0, 1, 2, 3, 4, 0...
+            currentIndex = (currentIndex + 1) % notificationQueue.length;
             displayNotification(notificationQueue[currentIndex]);
         }
-    }, 12000); // Menja notifikaciju svakih 12 sekundi
+    }, 12000);
 
     // Close dugme
     document.addEventListener('click', (e) => {
@@ -135,6 +119,5 @@
 
     // Inicijalno učitavanje
     fetchNotifications();
-    // Refresh API-ja na svakih 2 min (da se povuku nove ako ih klijent doda u bazu)
     setInterval(fetchNotifications, 120000);
 })();
