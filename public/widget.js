@@ -33,7 +33,9 @@
 
     // --- LOGIKA ---
     let notificationQueue = []; 
-    let currentIndex = 0; 
+    
+    // Pamti tačno kog korisnika je poslednji put prikazivao preko localStorage-a
+    let currentIndex = parseInt(localStorage.getItem('spw_current_index')) || 0;
     let currentSimulatedMinutes = parseInt(localStorage.getItem('spw_simulated_minutes')) || 1;
 
     function getSequentialTime(isSerbian) {
@@ -62,7 +64,6 @@
             currentSimulatedMinutes = 1;
         }
 
-        // Čuvamo stanje u memoriji pregledača
         localStorage.setItem('spw_simulated_minutes', currentSimulatedMinutes);
 
         return timeString;
@@ -70,6 +71,8 @@
 
     // Funkcija koja menja sadržaj widgeta na ekranu
     function displayNotification(data) {
+        if (!data) return;
+
         document.getElementById('customer-name').innerText = data.customerName;
         document.getElementById('city').innerText = data.city;
         document.getElementById('product-name').innerText = data.productName;
@@ -99,7 +102,12 @@
 
             if (data && data.length > 0) {
                 notificationQueue = data; 
-                currentIndex = 0; 
+                
+                // Osiguravamo da index ne izađe van granica niza ako se broj korisnika promenio
+                if (currentIndex >= notificationQueue.length) {
+                    currentIndex = 0;
+                }
+
                 displayNotification(notificationQueue[currentIndex]); 
             }
         } catch (err) { console.error('SaaS Widget Error:', err); }
@@ -109,6 +117,10 @@
     setInterval(() => {
         if (notificationQueue.length > 0) {
             currentIndex = (currentIndex + 1) % notificationQueue.length; 
+            
+            // Čuvamo novi indeks u memoriju pretraživača
+            localStorage.setItem('spw_current_index', currentIndex);
+
             displayNotification(notificationQueue[currentIndex]);
         }
     }, 35000); 
