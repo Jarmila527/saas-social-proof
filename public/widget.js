@@ -34,7 +34,7 @@
     // --- LOGIKA ---
     let notificationQueue = []; 
     let currentIndex = 0; 
-    let currentSimulatedMinutes = 1; // Počinjemo od 1 minuta
+    let currentSimulatedMinutes = parseInt(localStorage.getItem('spw_simulated_minutes')) || 1;
 
     function getSequentialTime(isSerbian) {
         let timeString = "";
@@ -56,13 +56,14 @@
             timeString = isSerbian ? `Pre ${currentSimulatedMinutes} min` : `${currentSimulatedMinutes} min ago`;
         }
 
-        // Povećavamo za tačno 3 minuta pri svakoj sledećoj kartici
         currentSimulatedMinutes += 3; 
         
-        // Ako pređe 2 sata (120 min), vraćamo na 1 minut ispočetka
         if (currentSimulatedMinutes > 120) {
             currentSimulatedMinutes = 1;
         }
+
+        // Čuvamo stanje u memoriji pregledača
+        localStorage.setItem('spw_simulated_minutes', currentSimulatedMinutes);
 
         return timeString;
     }
@@ -85,7 +86,6 @@
 
         clearTimeout(window.hideTimer);
 
-        // Kartica je vidljiva 12 sekundi pre nego što se povuče
         window.hideTimer = setTimeout(() => {
             widget.style.display = 'none';
         }, 12000);
@@ -105,7 +105,7 @@
         } catch (err) { console.error('SaaS Widget Error:', err); }
     }
 
-    // Kružna rotacija notifikacija – pojavljuje se na svakih 35 sekundi
+    // Kružna rotacija notifikacija na svakih 35 sekundi
     setInterval(() => {
         if (notificationQueue.length > 0) {
             currentIndex = (currentIndex + 1) % notificationQueue.length; 
