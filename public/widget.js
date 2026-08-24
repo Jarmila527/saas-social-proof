@@ -56,7 +56,7 @@
             timeString = isSerbian ? `Pre ${currentSimulatedMinutes} min` : `${currentSimulatedMinutes} min ago`;
         }
 
-        // Povećavamo za 3 minuta pri svakoj sledećoj kartici
+        // Povećavamo za tačno 3 minuta pri svakoj sledećoj kartici
         currentSimulatedMinutes += 3; 
         
         // Ako pređe 2 sata (120 min), vraćamo na 1 minut ispočetka
@@ -85,10 +85,10 @@
 
         clearTimeout(window.hideTimer);
 
-        // Kartica je vidljiva 15 sekundi
+        // Kartica je vidljiva 12 sekundi pre nego što se povuče
         window.hideTimer = setTimeout(() => {
             widget.style.display = 'none';
-        }, 15000);
+        }, 12000);
     }
 
     // Poziva API i puni niz
@@ -105,13 +105,13 @@
         } catch (err) { console.error('SaaS Widget Error:', err); }
     }
 
-    // Kružna rotacija notifikacija - pojavljuje se na svakih 60 sekundi (1 minut)
+    // Kružna rotacija notifikacija – pojavljuje se na svakih 35 sekundi
     setInterval(() => {
         if (notificationQueue.length > 0) {
             currentIndex = (currentIndex + 1) % notificationQueue.length; 
             displayNotification(notificationQueue[currentIndex]);
         }
-    }, 60000); 
+    }, 35000); 
 
     // Close dugme
     document.addEventListener('click', (e) => {
