@@ -35,6 +35,7 @@
     // --- LOGIKA ---
     let notificationQueue = []; // Ovde čuvamo niz od 5 notifikacija
     let currentIndex = 0; // Brojač koji pratimo
+    let currentSimulatedMinutes = 1; // Počinjemo od 1 minuta
 
     // function formatTimeAgo(dateString, isSerbian) {
     //     const createdDate = new Date(dateString);
@@ -49,26 +50,37 @@
     //     return isSerbian ? `Pre ${diffDay} ${diffDay === 1 ? 'dan' : 'dana'}` : `${diffDay} days ago`;
     // }
 
-    function formatTimeAgo(dateString, isSerbian) {
-        // Generiše nasumičan broj minuta između 1 i 120 (maksimalno 2 sata)
-        const randomMinutes = Math.floor(Math.random() * 120) + 1;
+    function getSequentialTime(isSerbian) {
+        // Prikazujemo trenutne minute
+        let timeString = "";
 
-        if (randomMinutes >= 60) {
-            const fullHours = Math.floor(randomMinutes / 60);
-            const remainingMins = randomMinutes % 60;
+        if (currentSimulatedMinutes >= 60) {
+            const fullHours = Math.floor(currentSimulatedMinutes / 60);
+            const remainingMins = currentSimulatedMinutes % 60;
 
             if (isSerbian) {
-                return remainingMins === 0
+                timeString = remainingMins === 0
                     ? `Pre ${fullHours} ${fullHours === 1 ? 'sat' : 'sata'}`
                     : `Pre ${fullHours}h ${remainingMins} min`;
             } else {
-                return remainingMins === 0
+                timeString = remainingMins === 0
                     ? `${fullHours} hours ago`
                     : `${fullHours}h ${remainingMins}m ago`;
             }
+        } else {
+            timeString = isSerbian ? `Pre ${currentSimulatedMinutes} min` : `${currentSimulatedMinutes} min ago`;
         }
 
-        return isSerbian ? `Pre ${randomMinutes} min` : `${randomMinutes} min ago`;
+        // Pripremamo sledeće vreme za sledeću rotaciju (uvećavamo za npr. 10-15 minuta ili kako želiš, 
+        // ili za 1 minut ako hoćeš postepeno, s tim što ćemo ga ovde npr. uvećavati za 15 min pri svakoj promeni)
+        currentSimulatedMinutes += 15;
+
+        // Ako pređe 120 minuta (2 sata), vraćamo ga na 1 minut ispočetka!
+        if (currentSimulatedMinutes > 120) {
+            currentSimulatedMinutes = 1;
+        }
+
+        return timeString;
     }
 
     // Funkcija koja menja sadržaj widgeta na ekranu
