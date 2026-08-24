@@ -32,34 +32,34 @@
     document.body.appendChild(widget);
 
     // --- LOGIKA ---
-    let notificationQueue = [];
-    let currentIndex = 0;
+    let notificationQueue = []; 
+    let currentIndex = 0; 
     let currentSimulatedMinutes = 1; // Počinjemo od 1 minuta
 
     function getSequentialTime(isSerbian) {
         let timeString = "";
-
+        
         if (currentSimulatedMinutes >= 60) {
             const fullHours = Math.floor(currentSimulatedMinutes / 60);
             const remainingMins = currentSimulatedMinutes % 60;
-
+            
             if (isSerbian) {
-                timeString = remainingMins === 0
-                    ? `Pre ${fullHours} ${fullHours === 1 ? 'sat' : 'sata'}`
+                timeString = remainingMins === 0 
+                    ? `Pre ${fullHours} ${fullHours === 1 ? 'sat' : 'sata'}` 
                     : `Pre ${fullHours}h ${remainingMins} min`;
             } else {
-                timeString = remainingMins === 0
-                    ? `${fullHours} hours ago`
+                timeString = remainingMins === 0 
+                    ? `${fullHours} hours ago` 
                     : `${fullHours}h ${remainingMins}m ago`;
             }
         } else {
             timeString = isSerbian ? `Pre ${currentSimulatedMinutes} min` : `${currentSimulatedMinutes} min ago`;
         }
 
-        // Povećavamo za 15 minuta pri svakoj sledećoj kartici
-        currentSimulatedMinutes += 15;
-
-        // Ako predje 2 sata (120 min), vraćamo na 1 minut ispočetka
+        // Povećavamo za tačno 3 minuta pri svakoj sledećoj kartici
+        currentSimulatedMinutes += 3; 
+        
+        // Ako pređe 2 sata (120 min), vraćamo na 1 minut ispočetka
         if (currentSimulatedMinutes > 120) {
             currentSimulatedMinutes = 1;
         }
@@ -97,9 +97,9 @@
             const data = await response.json();
 
             if (data && data.length > 0) {
-                notificationQueue = data;
-                currentIndex = 0;
-                displayNotification(notificationQueue[currentIndex]);
+                notificationQueue = data; 
+                currentIndex = 0; 
+                displayNotification(notificationQueue[currentIndex]); 
             }
         } catch (err) { console.error('SaaS Widget Error:', err); }
     }
@@ -107,10 +107,10 @@
     // Kružna rotacija notifikacija
     setInterval(() => {
         if (notificationQueue.length > 0) {
-            currentIndex = (currentIndex + 1) % notificationQueue.length;
+            currentIndex = (currentIndex + 1) % notificationQueue.length; 
             displayNotification(notificationQueue[currentIndex]);
         }
-    }, 12000);
+    }, 12000); 
 
     // Close dugme
     document.addEventListener('click', (e) => {
@@ -119,5 +119,5 @@
 
     // Inicijalno učitavanje
     fetchNotifications();
-    setInterval(fetchNotifications, 120000);
+    setInterval(fetchNotifications, 30000);
 })();
